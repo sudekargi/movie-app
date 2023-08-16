@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/home_screen.dart';
+import 'package:movie_app/api.dart';
+//import 'package:movie_app/home_screen.dart';
 //import 'package:google_fonts/google_fonts.dart';
 //import 'package:tmdb_api/tmdb_api.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
             //title: const Text('Material App Bar'),
             ),*/
         body: Center(
-          child: HomeScreen(),
+          child: MovieApp(),
         ),
       ),
     );

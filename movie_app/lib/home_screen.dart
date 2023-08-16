@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,7 +6,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         toolbarHeight: 100,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
+      ),*/
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Padding(
@@ -53,6 +53,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+/*
 class _CustomClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -74,7 +75,7 @@ class _CustomClipper extends CustomClipper<Path> {
     return true;
   }
 }
-
+*/
 class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -86,7 +87,7 @@ class MovieCard extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
             child: Image.network(
-              'https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg',
+              'https://image.tmdb.org/t/p/w500/',
               fit: BoxFit.cover,
             ),
           ),
@@ -114,3 +115,4 @@ class MovieCard extends StatelessWidget {
 void main() => runApp(MaterialApp(
       home: HomeScreen(),
     ));
+*/
