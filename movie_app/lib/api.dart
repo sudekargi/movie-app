@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:movie_app/detail.dart';
+
 const apiKey = '8bc3c7f1c58e6ac9d45e0d9d62bc0e57';
 
 void main() {
-  runApp(MovieApp());
+  runApp(const MovieApp());
 }
 
 class MovieApp extends StatefulWidget {
@@ -54,7 +56,7 @@ class _MovieAppState extends State<MovieApp> {
               color: const Color.fromARGB(255, 3, 26, 59),
               child: Center(
                 child: Text(
-                  'Popular Movies',
+                  'Popüler Filmler',
                   style: Theme.of(context).textTheme.headline6!.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -79,9 +81,23 @@ class _MovieAppState extends State<MovieApp> {
             final popularity = movie['popularity'];
             final language = movie['original_language'];
 
-            return MovieCard(
-              posterPath: posterPath,
-              movieName: movieName,
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailPage(
+                        movieName: movieName,
+                        posterPath: posterPath,
+                        overview: overview,
+                        rating: double.parse(rating.toString()),
+                        popularity: popularity,
+                        language: language,
+                        index: index),
+                  ),
+                );
+              },
+              child: MovieCard(posterPath: posterPath, movieName: movieName),
             );
           },
         ),
@@ -119,15 +135,6 @@ class MovieCard extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(8.0),
             color: Colors.white.withOpacity(0.8),
-            child: Text(
-              movieName,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
           ),
         ),
       ],
