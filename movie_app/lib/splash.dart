@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:movie_app/api.dart';
+import 'package:movie_app/login.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -15,13 +14,13 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    navigateGoHome();
+    navigateGoLogin();
   }
 
-  navigateGoHome() async {
-    await Future.delayed(const Duration(seconds: 2), () {});
+  navigateGoLogin() async {
+    await Future.delayed(const Duration(seconds: 4), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: ((context) => MovieApp())));
+        context, MaterialPageRoute(builder: ((context) => LoginPage())));
   }
 
   @override
