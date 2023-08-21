@@ -26,93 +26,180 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  bool showText = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 3, 26, 59),
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Text('Film Detayı'),
-      ),
-      body: SingleChildScrollView(
-        child: Stack(
+        backgroundColor: Color.fromARGB(255, 3, 26, 59),
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text('Film Detayı'),
+        ),
+        body: Column(
           children: [
-            Image.network(
-              'https://image.tmdb.org/t/p/w500/${widget.posterPath}',
-              fit: BoxFit.cover,
-              color: Colors.blueGrey.withOpacity(0.4),
-              colorBlendMode: BlendMode.darken,
+            Stack(
+              children: [
+                buildMovieInformation(context),
+                buildInfoName(context),
+              ],
             ),
-            const Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.transparent,
-                      Color.fromARGB(255, 3, 26, 59),
+            body()
+          ],
+        ));
+  }
+
+  Widget body() {
+    return Column(
+      children: [
+        builMovieButton(context),
+        if (showText)
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Text(
+                  'Rating: ${widget.rating}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  'Popularity: ${widget.popularity}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  'Language: ${widget.language}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  Positioned builMovieButton(BuildContext context) {
+    return Positioned(
+        bottom: 0,
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(20.0),
+                    primary: Color.fromARGB(255, 122, 37, 37),
+                    fixedSize:
+                        Size(MediaQuery.of(context).size.width * 0.650, 65),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    )),
+                onPressed: () {
+                  setState(() {
+                    toggleTextVisibility();
+                  });
+                },
+                child: RichText(
+                  text: TextSpan(
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.white),
+                    children: [
+                      TextSpan(
+                        text: 'Add to',
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
                     ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.3, 0.5],
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 150,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Text(
-                      widget.movieName,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      widget.overview,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 21,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Text(
-                      'Rating: ${widget.rating}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      'Popularity: ${widget.popularity}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      'Language: ${widget.language}',
-                      maxLines: 8,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(height: 1.75, color: Colors.white),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
+            ],
+          ),
+        ));
+  }
+
+  void toggleTextVisibility() {
+    setState(() {
+      showText = !showText;
+    });
+  }
+
+  Positioned buildInfoName(BuildContext context) {
+    return Positioned(
+      bottom: 0,
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Text(
+              widget.movieName,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
               ),
-            )
+            ),
+            Text(
+              widget.overview,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(fontSize: 16, height: 1.60, color: Colors.white),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  SingleChildScrollView buildMovieInformation(BuildContext context) {
+    return SingleChildScrollView(
+      child: Stack(
+        children: [
+          Container(
+            color: Color.fromARGB(255, 3, 26, 59),
+          ),
+          Image.network(
+            'https://image.tmdb.org/t/p/w500/${widget.posterPath}',
+            width: double.infinity,
+            fit: BoxFit.cover,
+            color: Colors.blueGrey.withOpacity(0.4),
+            colorBlendMode: BlendMode.darken,
+          ),
+          const Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.transparent,
+                    Color.fromARGB(255, 3, 26, 59),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0.2, 0.99],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
