@@ -1,6 +1,11 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/addtouser.dart';
 import 'package:movie_app/api.dart';
+//import 'package:tmdb_api/tmdb_api.dart';
+//import 'package:firebase_core/firebase_core.dart';
+//import 'firebase_options.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +15,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late FirebaseAuth auth;
+  String _email = 'sude.kargi2408@gmail.com';
+  String _password = 's1234';
+
+  @override
+  void initState() {
+    super.initState();
+    auth = FirebaseAuth.instance;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +66,13 @@ class _LoginPageState extends State<LoginPage> {
                 child: FadeInLeft(
                   duration: const Duration(milliseconds: 500),
                   child: TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        _email = value;
+                      });
+                    },
                     decoration: const InputDecoration(
-                      labelText: 'Kullanıcı Adı ',
+                      labelText: 'Username',
                       labelStyle: TextStyle(color: Colors.black),
                       hintStyle: TextStyle(color: Colors.black),
                       border: InputBorder.none,
@@ -74,9 +94,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: FadeInLeft(
                   duration: const Duration(milliseconds: 500),
                   child: TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        _password = value;
+                      });
+                    },
                     obscureText: true,
                     decoration: const InputDecoration(
-                        labelText: 'Şifre',
+                        labelText: 'Password',
                         labelStyle: TextStyle(color: Colors.black),
                         hintStyle: TextStyle(color: Colors.black),
                         border: InputBorder.none,
@@ -89,25 +114,52 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MovieApp()),
-                  );
+                  loginUserEmailAndPassword();
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 122, 37, 37)),
                 ),
                 child: const Text(
-                  'Giriş Yap',
+                  'Log in',
                   style: TextStyle(color: Colors.white),
                 ),
-              )
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CreateUser()),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromARGB(255, 122, 37, 37)),
+                  ),
+                  child: const Text(
+                    'Sign in',
+                    style: TextStyle(color: Colors.white),
+                  ))
             ]),
           ),
         ],
       ),
     );
+  }
+
+  void loginUserEmailAndPassword() async {
+    try {
+      var _userCredential = await auth.signInWithEmailAndPassword(
+          email: _email, password: _password);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MovieApp()),
+      );
+      debugPrint(_userCredential.toString());
+    } catch (e) {
+      showAlertDialog(context);
+      debugPrint(e.toString());
+    }
   }
 }
 
@@ -130,4 +182,41 @@ class _CustomClipperLogin extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return true;
   }
+}
+
+showAlertDialog(BuildContext context) {
+  AlertDialog alert = AlertDialog(
+    title: Text(
+      "WARNING",
+      style: TextStyle(color: Colors.white),
+    ),
+    content: Text(
+      "username or password is incorrect",
+      style: TextStyle(color: Colors.white),
+    ),
+    backgroundColor: Color.fromARGB(255, 3, 26, 59),
+    actions: [
+      TextButton(
+        child: Text(
+          "OK",
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+          print("ok");
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(
+              const Color.fromARGB(255, 122, 37, 37)),
+        ),
+      ),
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
