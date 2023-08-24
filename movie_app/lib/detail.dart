@@ -34,7 +34,7 @@ class _DetailPageState extends State<DetailPage> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: Text('Film Detayı'),
+          title: Text('Detail'),
         ),
         body: Column(
           children: [

@@ -57,7 +57,7 @@ class _MovieAppState extends State<MovieApp> {
               color: const Color.fromARGB(255, 3, 26, 59),
               child: Center(
                 child: Text(
-                  'Popüler Filmler',
+                  'Populer Films',
                   style: Theme.of(context).textTheme.headline6!.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
