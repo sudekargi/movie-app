@@ -1,5 +1,5 @@
 //import 'dart:ffi';
-
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
@@ -56,33 +56,36 @@ class _DetailPageState extends State<DetailPage> {
         if (showText)
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Text(
-                  'Rating: ${widget.rating}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
+            child: FadeInLeft(
+              duration: const Duration(milliseconds: 500),
+              child: Column(
+                children: [
+                  Text(
+                    'Rating: ${widget.rating}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                Text(
-                  'Popularity: ${widget.popularity}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
+                  Text(
+                    'Popularity: ${widget.popularity}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                Text(
-                  'Language: ${widget.language}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
+                  Text(
+                    'Language: ${widget.language}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
       ],
