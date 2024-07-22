@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late FirebaseAuth auth;
-  String _email = 'sude.kargi2408@gmail.com';
+  String _email = 'sss@gmail.com';
   String _password = 's1234';
 
   @override
